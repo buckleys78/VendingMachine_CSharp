@@ -1,0 +1,15 @@
+C:\Users\SJB\AppData\Local\Temporary Projects\SimpleVendingMachine\bin\Debug\SimpleVendingMachine.exe.config
+C:\Users\SJB\AppData\Local\Temporary Projects\SimpleVendingMachine\bin\Debug\SimpleVendingMachine.exe
+C:\Users\SJB\AppData\Local\Temporary Projects\SimpleVendingMachine\bin\Debug\SimpleVendingMachine.pdb
+C:\Users\SJB\AppData\Local\Temporary Projects\SimpleVendingMachine\obj\Debug\SimpleVendingMachine.csprojResolveAssemblyReference.cache
+C:\Users\SJB\AppData\Local\Temporary Projects\SimpleVendingMachine\obj\Debug\SimpleVendingMachine.exe
+C:\Users\SJB\AppData\Local\Temporary Projects\SimpleVendingMachine\obj\Debug\SimpleVendingMachine.pdb
+E:\Learning New Stuff\UW Continuing Ed\CSharp_810\Exercise01\SimpleVendingMachine\SimpleVendingMachine\bin\Debug\SimpleVendingMachine.exe.config
+E:\Learning New Stuff\UW Continuing Ed\CSharp_810\Exercise01\SimpleVendingMachine\SimpleVendingMachine\obj\Debug\SimpleVendingMachine.exe
+E:\Learning New Stuff\UW Continuing Ed\CSharp_810\Exercise01\SimpleVendingMachine\SimpleVendingMachine\obj\Debug\SimpleVendingMachine.pdb
+E:\Learning New Stuff\UW Continuing Ed\CSharp_810\Exercise01\SimpleVendingMachine\SimpleVendingMachine\bin\Debug\SimpleVendingMachine.exe
+E:\Learning New Stuff\UW Continuing Ed\CSharp_810\Exercise01\SimpleVendingMachine\SimpleVendingMachine\bin\Debug\SimpleVendingMachine.pdb
+E:\Learning New Stuff\UW Continuing Ed\CSharp_810\Exercise01\SimpleVendingMachine\SimpleVendingMachine\obj\Debug\SimpleVendingMachine.csprojResolveAssemblyReference.cache
+E:\Learning New Stuff\UW Continuing Ed\CSharp_810\Project\SimpleVendingMachine\bin\Debug\SimpleVendingMachine.exe.config
+E:\Learning New Stuff\UW Continuing Ed\CSharp_810\Project\SimpleVendingMachine\obj\Debug\SimpleVendingMachine.exe
+E:\Learning New Stuff\UW Continuing Ed\CSharp_810\Project\SimpleVendingMachine\obj\Debug\SimpleVendingMachine.pdb
