@@ -33,12 +33,31 @@ namespace SimpleVendingMachine {
             }
 
             WriteLine($"You have inserted {totalAmountInserted} cents.");
-            string selectedFlavor = "Lemon";
+            Flavor selectedFlavor = Flavor.LEMON;
             vendingMachine.RemoveACanOf(selectedFlavor);
             WriteLine($"Thanks. Here is your {selectedFlavor} soda.");
             if (amountShort < 0) {
                 WriteLine($"and here is your change of {-amountShort} cents.");
             }
+
+            Coin coinTest1 = new Coin();
+            WriteLine($"coinTest1 expects 'SLUG', result = {coinTest1.ToString()}.");
+
+            Coin coinTest2 = new Coin(Coin.Denomination.HALFDOLLAR);
+            WriteLine($"coinTest2 expects 'HALFDOLLAR', result = {coinTest2.ToString()}.");
+
+            Coin coinTest3 = new Coin("Dime");
+            WriteLine($"coinTest3 expects 'DIME', result = {coinTest3.ToString()}.");
+
+            Coin coinTest4 = new Coin("Quarter");
+            WriteLine($"coinTest4 expects 25, result = {coinTest4.ValueOf}.");
+
+            Coin coinTest5 = new Coin(25);
+            WriteLine($"coinTest5 expects 25, result = {coinTest5.ValueOf}.");
+
+            Coin coinTest6 = new Coin(15);
+            WriteLine($"coinTest6 expects 0, result = {coinTest6.ValueOf}.");
+
             ReadKey();
         }
     }

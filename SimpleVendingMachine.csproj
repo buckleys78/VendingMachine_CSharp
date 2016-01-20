@@ -62,6 +62,7 @@
     <Compile Include="Bin.cs" />
     <Compile Include="Can.cs" />
     <Compile Include="CanRack.cs" />
+    <Compile Include="Coin.cs" />
     <Compile Include="Flavor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

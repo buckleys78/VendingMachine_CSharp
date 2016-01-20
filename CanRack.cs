@@ -11,11 +11,11 @@ namespace SimpleVendingMachine {
         }
 
         // properties
-        Dictionary<string, Bin> Bins { get; set; }
+        Dictionary<Flavor, Bin> Bins { get; set; }
 
         // methods
-        public void AddACanOf(string flavorName) {
-            Debug.WriteLine($"CanRack.AddACanOf was called for flavor {flavorName}.");
+        public void AddACanOf(Flavor flavorName) {
+            Debug.WriteLine($"CanRack.AddACanOf was called for flavor {flavorName.ToString()}.");
             Bin bin;
             if (Bins.TryGetValue(flavorName, out bin)) {
                 bin.AddCan();
@@ -23,14 +23,14 @@ namespace SimpleVendingMachine {
         }
 
         private void ConfigureTheCanRack() {
-            Bins = new Dictionary<string, Bin>();
-            Bins.Add("Regular", new Bin("Regular"));
-            Bins.Add("Orange", new Bin("Orange"));
-            Bins.Add("Lemon", new Bin("Lemon"));
+            Bins = new Dictionary<Flavor, Bin>();
+            Bins.Add(Flavor.REGULAR, new Bin(Flavor.REGULAR));
+            Bins.Add(Flavor.ORANGE, new Bin(Flavor.ORANGE));
+            Bins.Add(Flavor.LEMON, new Bin(Flavor.LEMON));
             Debug.Write(Inventory());
         }
 
-        public void EmptyTheCanRackOf(string flavorName) {
+        public void EmptyTheCanRackOf(Flavor flavorName) {
             Debug.WriteLine($"CanRack.EmptyTheCanRackOf was called for flavor {flavorName}.");
             Bin bin;
             if (Bins.TryGetValue(flavorName, out bin)) {
@@ -45,7 +45,7 @@ namespace SimpleVendingMachine {
             }
         }
 
-        public bool IsEmpty(string flavorName) {
+        public bool IsEmpty(Flavor flavorName) {
             Debug.WriteLine($"CanRack.IsEmpty was called for flavor {flavorName}.");
             Bin bin;
             bool isEmpty = true;
@@ -55,7 +55,7 @@ namespace SimpleVendingMachine {
             return isEmpty;
         }
 
-        public bool IsFull(string flavorName) {
+        public bool IsFull(Flavor flavorName) {
             Debug.WriteLine($"CanRack.IsFull was called for flavor {flavorName}.");
             Bin bin;
             bool isFull = false;
@@ -65,7 +65,7 @@ namespace SimpleVendingMachine {
             return isFull;
         }
 
-        public void RemoveACanOf(string flavorName) {
+        public void RemoveACanOf(Flavor flavorName) {
             Debug.WriteLine($"CanRack.RemoveACanOf was called for flavor {flavorName}.");
             Bin bin;
             if (Bins.TryGetValue(flavorName, out bin)) {
@@ -81,7 +81,5 @@ namespace SimpleVendingMachine {
             }
             return inventory;
         }
-
     }
-
 }

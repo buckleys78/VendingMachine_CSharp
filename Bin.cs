@@ -18,8 +18,6 @@ namespace SimpleVendingMachine {
 
         // Properties
         public Flavor Flavor { get; set; }
-        //public string Flavor { get; set; }
-
 
         public string Inventory {
             get {
