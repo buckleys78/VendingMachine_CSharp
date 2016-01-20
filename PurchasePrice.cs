@@ -7,14 +7,20 @@ using System.Threading.Tasks;
 namespace SimpleVendingMachine {
     class PurchasePrice {
         public PurchasePrice() {
-            Price = 0;
+            PriceInDollars = 0;
         }
 
-        public PurchasePrice(int initialPrice) {
-            Price = initialPrice;
+        public PurchasePrice(int initialPriceInCents) {
+            PriceInDollars = initialPriceInCents / 100.0M;
         }
 
-        public int Price { get; set; }
+        public int Price {
+            get {
+                return (int) (PriceInDollars * 100);
+            }
+        }
+
+        public decimal PriceInDollars { get; private set; }
 
     }
 }
