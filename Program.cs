@@ -1,7 +1,7 @@
 ﻿using static System.Console;
 using System.Diagnostics;
 
-// using C# v6.0
+// // using C# v6.0
 // assignment #2 - Classes
 // Author: Steve Buckley
 
