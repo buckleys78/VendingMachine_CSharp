@@ -1,8 +1,8 @@
 ﻿using static System.Console;
 using System.Diagnostics;
 
-// // using C# v6.0
-// assignment #2 - Classes
+// using C# v6.0
+// assignment #3 - Enumerations
 // Author: Steve Buckley
 
 namespace SimpleVendingMachine {
