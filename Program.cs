@@ -2,7 +2,7 @@
 using System.Diagnostics;
 
 // using C# v6.0
-// assignment #4 - Controls
+// assignment #4 - Control Structures
 // Author: Steve Buckley
 
 namespace SimpleVendingMachine {
