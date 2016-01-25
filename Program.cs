@@ -2,7 +2,7 @@
 using System.Diagnostics;
 
 // using C# v6.0
-// assignment #3 - Enumerations
+// assignment #4 - Controls
 // Author: Steve Buckley
 
 namespace SimpleVendingMachine {
@@ -10,55 +10,70 @@ namespace SimpleVendingMachine {
         static void Main(string[] args) {
             CanRack vendingMachine = new CanRack();
             PurchasePrice priceOfOneSoda = new PurchasePrice(35);
-            int totalAmountInserted = 0;
-            int amountShort =0;
+            bool purchasingAnotherSoda = true;
 
-            Debug.WriteLine("This goes in the debug window.");
-            Debug.WriteLine("To make this window visible, use menu item.");
-            Debug.WriteLine("Debug\\Windows\\Output");
+            while (purchasingAnotherSoda) {
+                decimal totalAmountInserted = 0;
+                decimal amountShort = 0;
 
+                WriteLine("Welcome to the .NET C# Soda Vending Machine");
+                WriteLine(vendingMachine.DisplayCanRack());
+                Write($"Please insert {priceOfOneSoda.Price} cents.\n");
+                Write("Enter your coins as one or more single letters separated by spaces, \n N(ickel), D(ime), Q(uarter), H(alfDollar): ");
 
-            WriteLine("Welcome to the .NET C# Soda Vending Machine");
-            Write($"Please insert {priceOfOneSoda.Price} cents: ");
+                while (totalAmountInserted < priceOfOneSoda.PriceInDollars) {
+                    string userResponse = ReadLine();
+                    totalAmountInserted += AmountInsertedFromListOfCoins(userResponse);
+                    amountShort = priceOfOneSoda.PriceInDollars - totalAmountInserted;
+                    if (amountShort > 0) {
+                        Write($"Please insert at least {amountShort:C} more: ");
+                    }
+                }
 
-            while (totalAmountInserted < priceOfOneSoda.Price) {
-                string userResponse = ReadLine();
-                int amountInsertedThisTime = 0;
-                int.TryParse(userResponse, out amountInsertedThisTime);
-                totalAmountInserted += amountInsertedThisTime;
-                amountShort = priceOfOneSoda.Price - totalAmountInserted;
-                if (amountShort > 0) {
-                    Write($"Please insert at least {amountShort} cents more: ");
+                WriteLine($"You have inserted {totalAmountInserted:C}\n\n");
+                bool selectionMade = false;
+                Flavor selectedFlavor = Flavor.LEMON;
+                while (!selectionMade) {
+                    WriteLine(vendingMachine.ConsoleSelectionPrompt());
+                    string userSelection = ReadLine();
+                    selectionMade = vendingMachine.StocksThisFlavor(userSelection, ref selectedFlavor);
+                    if (selectionMade) {
+                        if (vendingMachine.IsEmpty(selectedFlavor)) {
+                            WriteLine($"Sorry, we are out of {selectedFlavor}, please make a different choice.\n");
+                            selectionMade = false;
+                        }
+                    } else {
+                        WriteLine($"{userSelection} is not a recognized flavor. Please chose again.\n");
+                    }
+                }
+
+                vendingMachine.RemoveACanOf(selectedFlavor);
+                WriteLine($"Thanks. Here is your {selectedFlavor} soda.");
+                if (amountShort < 0) {
+                    WriteLine($"and here is your change of {-amountShort:C}.");
+                }
+
+                WriteLine(vendingMachine.DisplayCanRack());
+
+                if (vendingMachine.IsEmpty()) {
+                    WriteLine("This vending machine is empty. Please visit your nearest Costco if you are still thirsty.");
+                    purchasingAnotherSoda = false;
+                    ReadKey();
+                } else {
+                    WriteLine("Press 'x' to exit or any other key to purchase another soda.");
+                    purchasingAnotherSoda = ReadKey().Key.ToString().ToLower() != "x";
                 }
             }
+        }
 
-            WriteLine($"You have inserted {totalAmountInserted} cents.");
-            Flavor selectedFlavor = Flavor.LEMON;
-            vendingMachine.RemoveACanOf(selectedFlavor);
-            WriteLine($"Thanks. Here is your {selectedFlavor} soda.");
-            if (amountShort < 0) {
-                WriteLine($"and here is your change of {-amountShort} cents.");
+        private static decimal AmountInsertedFromListOfCoins(string listOfCoins) {
+            if (listOfCoins.Length == 0) return 0;
+            string[] coins = listOfCoins.Split(' ');
+            decimal sum = 0;
+            foreach (var coinAbbrev in coins) {
+                sum += new Coin(coinAbbrev).ValueOf;
             }
-
-            Coin coinTest1 = new Coin();
-            WriteLine($"coinTest1 expects 'SLUG', result = {coinTest1.ToString()}.");
-
-            Coin coinTest2 = new Coin(Coin.Denomination.HALFDOLLAR);
-            WriteLine($"coinTest2 expects 'HALFDOLLAR', result = {coinTest2.ToString()}.");
-
-            Coin coinTest3 = new Coin("Dime");
-            WriteLine($"coinTest3 expects 'DIME', result = {coinTest3.ToString()}.");
-
-            Coin coinTest4 = new Coin("Quarter");
-            WriteLine($"coinTest4 expects 25, result = {coinTest4.ValueOf}.");
-
-            Coin coinTest5 = new Coin(25);
-            WriteLine($"coinTest5 expects 25, result = {coinTest5.ValueOf}.");
-
-            Coin coinTest6 = new Coin(15);
-            WriteLine($"coinTest6 expects 0, result = {coinTest6.ValueOf}.");
-
-            ReadKey();
+            return sum;
         }
     }
 }

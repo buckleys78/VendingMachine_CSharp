@@ -19,15 +19,19 @@ namespace SimpleVendingMachine {
             Bin bin;
             if (Bins.TryGetValue(flavorName, out bin)) {
                 bin.AddCan();
+            } else {
+                Debug.WriteLine($"unknown flavor {flavorName}");
             }
         }
 
         private void ConfigureTheCanRack() {
-            Bins = new Dictionary<Flavor, Bin>();
-            Bins.Add(Flavor.REGULAR, new Bin(Flavor.REGULAR));
-            Bins.Add(Flavor.ORANGE, new Bin(Flavor.ORANGE));
-            Bins.Add(Flavor.LEMON, new Bin(Flavor.LEMON));
-            Debug.Write(Inventory());
+            // new C#6 option
+            Bins = new Dictionary<Flavor, Bin> {
+                [Flavor.REGULAR] = new Bin(Flavor.REGULAR),
+                [Flavor.ORANGE] = new Bin(Flavor.ORANGE),
+                [Flavor.LEMON] = new Bin(Flavor.LEMON)
+            };
+            Debug.Write(DisplayCanRack());
         }
 
         public void EmptyTheCanRackOf(Flavor flavorName) {
@@ -43,6 +47,10 @@ namespace SimpleVendingMachine {
             foreach (var flavorName in Bins.Keys) {
                 Bins[flavorName].FillBin();
             }
+        }
+
+        public bool IsEmpty() {
+            return TotalInventory() == 0;
         }
 
         public bool IsEmpty(Flavor flavorName) {
@@ -73,13 +81,36 @@ namespace SimpleVendingMachine {
             }
         }
 
-        public string Inventory() {
-            string inventory = "";
+        public bool StocksThisFlavor(string requestedFlavorName, ref Flavor selectedFlavor) {
+            Flavor flavor = Flavor.REGULAR;
+            bool stocksThisFlavor = Enum.TryParse(requestedFlavorName.ToUpper(), out flavor);
+            selectedFlavor = flavor;
+            return stocksThisFlavor;
+        }
 
+        private int TotalInventory() {
+            int canCount = 0;
+            foreach (var key in Bins.Keys) {
+                canCount += (Bins[key].Quantity);
+            }
+            return canCount;
+        }
+
+
+        public string DisplayCanRack() {
+            string inventory = "Inventory:\n";
             foreach (var key in Bins.Keys) {
                 inventory += (Bins[key].Inventory + "\n");
             }
-            return inventory;
+            return inventory += "\n";
+        }
+
+        public string ConsoleSelectionPrompt() {
+            string prompt = "Select from the following: ";
+            foreach (var key in Bins.Keys) {
+                prompt += key.ToString() + ", ";
+            }
+            return prompt;
         }
     }
 }

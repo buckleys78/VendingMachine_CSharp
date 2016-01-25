@@ -3,7 +3,8 @@ using System;
 
 namespace SimpleVendingMachine {
     class Bin {
-        private int maxCapacity = 3;
+        private const int maxCapacity = 3;
+        private const int minCapacity = 0;
 
         //Constructor(s)
         public Bin(string flavor) {
@@ -28,7 +29,7 @@ namespace SimpleVendingMachine {
         public bool IsEmpty {
             get {
                 Debug.WriteLine($"Bin.IsEmpty was called for flavor {Flavor.ToString()}");
-                return Quantity == 0;
+                return Quantity == minCapacity;
             }
         }
 
@@ -50,7 +51,7 @@ namespace SimpleVendingMachine {
         }
 
         public void EmptyBin() {
-            Quantity = 0;
+            Quantity = minCapacity;
             Debug.WriteLine($"Bin.EmptyBin was called for flavor {Flavor.ToString()}, New Qty = {Quantity}.");
         }
 
