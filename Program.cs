@@ -8,9 +8,16 @@ using System.Diagnostics;
 namespace SimpleVendingMachine {
     class Program {
         static void Main(string[] args) {
+            
             CanRack vendingMachine = new CanRack();
             PurchasePrice priceOfOneSoda = new PurchasePrice(35);
             bool purchasingAnotherSoda = true;
+
+            if (args.Length > 0) {
+                ProcessCommandLinePurchase(args, ref vendingMachine, priceOfOneSoda);
+                ReadKey();
+                return;
+            }
 
             while (purchasingAnotherSoda) {
                 decimal totalAmountInserted = 0;
@@ -74,6 +81,36 @@ namespace SimpleVendingMachine {
                 sum += new Coin(coinAbbrev).ValueOf;
             }
             return sum;
+        }
+
+        private static void ProcessCommandLinePurchase(string[] args, ref CanRack vendingMachine, PurchasePrice priceOfOneSoda) {
+            if (args.Length < 2 ) {
+                WriteLine("Invalid Command line parameters: must be in the form 'flavor coin1 [coin2]...");
+                return;
+            }
+
+            Flavor flavor = Flavor.LEMON;
+            bool isValidFlavor = vendingMachine.StocksThisFlavor(args[0], ref flavor);
+            if (!isValidFlavor) {
+                WriteLine($"{args[0]} is not a valid flavor name.");
+                return;
+            }
+
+            decimal valueOfCoins = 0;
+            for (int i=1; i<args.Length; i++) {
+                valueOfCoins += new Coin(args[i]).ValueOf;
+            }
+
+            decimal amountOfChange = valueOfCoins - priceOfOneSoda.PriceInDollars;
+            if (amountOfChange < 0) {
+                WriteLine($"You are short {-amountOfChange:C}.");
+            } else {
+                vendingMachine.RemoveACanOf(flavor);
+                WriteLine($"Thanks. Here is your {flavor} soda.\n");
+                if (amountOfChange > 0) {
+                    WriteLine($"and here is your change of {amountOfChange:C}.");
+                }
+            }
         }
     }
 }
