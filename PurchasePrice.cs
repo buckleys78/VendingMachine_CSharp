@@ -10,8 +10,13 @@ namespace SimpleVendingMachine {
             PriceInDollars = 0;
         }
 
+        [Obsolete("Use the decimal version of the constructor instead",error:false)]
         public PurchasePrice(int initialPriceInCents) {
             PriceInDollars = initialPriceInCents / 100.0M;
+        }
+
+        public PurchasePrice(decimal initialPriceInDollars) {
+            PriceInDollars = initialPriceInDollars;
         }
 
         public int Price {

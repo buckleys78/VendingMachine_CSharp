@@ -14,6 +14,10 @@ namespace SimpleVendingMachine {
         Dictionary<Flavor, Bin> Bins { get; set; }
 
         // methods
+        public void AddACanOf(string flavorName) {
+            AddACanOf((Flavor)Enum.Parse(typeof(Flavor), flavorName));
+        }
+
         public void AddACanOf(Flavor flavorName) {
             Debug.WriteLine($"CanRack.AddACanOf was called for flavor {flavorName.ToString()}.");
             Bin bin;
@@ -71,6 +75,10 @@ namespace SimpleVendingMachine {
                 isFull = bin.IsFull;
             }
             return isFull;
+        }
+
+        public void RemoveACanOf(string flavorName) {
+            RemoveACanOf((Flavor)Enum.Parse(typeof(Flavor), flavorName));
         }
 
         public void RemoveACanOf(Flavor flavorName) {
