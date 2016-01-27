@@ -9,7 +9,9 @@ namespace SimpleVendingMachine {
         //Constructor(s)
         public Bin(string flavor) {
             Flavor flavorAsType = Flavor.REGULAR;
-            Enum.TryParse(flavor.ToUpper(), out flavorAsType);
+            if (FlavorOps.HasFlavor(flavor)) {
+                FlavorOps.ToFlavor(flavor);
+            }
             Flavor = flavorAsType;
         }
 

@@ -28,19 +28,19 @@ namespace SimpleVendingMachine {
                 Write($"Please insert {priceOfOneSoda.Price} cents.\n");
                 Write("Enter your coins as one or more single letters separated by spaces, \n N(ickel), D(ime), Q(uarter), H(alfDollar): ");
 
-                while (totalAmountInserted < priceOfOneSoda.PriceInDollars) {
+                do {
                     string userResponse = ReadLine();
                     totalAmountInserted += AmountInsertedFromListOfCoins(userResponse);
                     amountShort = priceOfOneSoda.PriceInDollars - totalAmountInserted;
                     if (amountShort > 0) {
                         Write($"Please insert at least {amountShort:C} more: ");
                     }
-                }
+                } while (totalAmountInserted < priceOfOneSoda.PriceInDollars);
 
                 WriteLine($"You have inserted {totalAmountInserted:C}\n\n");
                 bool selectionMade = false;
                 Flavor selectedFlavor = Flavor.LEMON;
-                while (!selectionMade) {
+                do {
                     WriteLine(vendingMachine.ConsoleSelectionPrompt());
                     string userSelection = ReadLine();
                     selectionMade = vendingMachine.StocksThisFlavor(userSelection, ref selectedFlavor);
@@ -50,9 +50,9 @@ namespace SimpleVendingMachine {
                             selectionMade = false;
                         }
                     } else {
-                        WriteLine($"{userSelection} is not a recognized flavor. Please chose again.\n");
+                        WriteLine($"{userSelection} is not a recognized flavor. Please choose again.\n");
                     }
-                }
+                } while (!selectionMade);
 
                 vendingMachine.RemoveACanOf(selectedFlavor);
                 WriteLine($"Thanks. Here is your {selectedFlavor} soda.");

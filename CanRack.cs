@@ -15,7 +15,9 @@ namespace SimpleVendingMachine {
 
         // methods
         public void AddACanOf(string flavorName) {
-            AddACanOf((Flavor)Enum.Parse(typeof(Flavor), flavorName));
+            if (FlavorOps.HasFlavor(flavorName)) {
+                AddACanOf(FlavorOps.ToFlavor(flavorName));
+            }
         }
 
         public void AddACanOf(Flavor flavorName) {
@@ -29,12 +31,11 @@ namespace SimpleVendingMachine {
         }
 
         private void ConfigureTheCanRack() {
-            // new C#6 option
-            Bins = new Dictionary<Flavor, Bin> {
-                [Flavor.REGULAR] = new Bin(Flavor.REGULAR),
-                [Flavor.ORANGE] = new Bin(Flavor.ORANGE),
-                [Flavor.LEMON] = new Bin(Flavor.LEMON)
-            };
+            Bins = new Dictionary<Flavor, Bin>();
+            foreach (var flavor in FlavorOps.AllFlavors) {
+                Debug.WriteLine($"AllFlavors: {flavor.ToString()}");
+                Bins.Add(flavor, new Bin(flavor));
+            }
             Debug.Write(DisplayCanRack());
         }
 
@@ -48,7 +49,7 @@ namespace SimpleVendingMachine {
 
         public void FillTheCanRack() {
             Debug.WriteLine($"CanRack.FillTheCanRack was called.");
-            foreach (var flavorName in Bins.Keys) {
+            foreach (Flavor flavorName in Bins.Keys) {
                 Bins[flavorName].FillBin();
             }
         }
@@ -78,7 +79,9 @@ namespace SimpleVendingMachine {
         }
 
         public void RemoveACanOf(string flavorName) {
-            RemoveACanOf((Flavor)Enum.Parse(typeof(Flavor), flavorName));
+            if (FlavorOps.HasFlavor(flavorName)) {
+                RemoveACanOf(FlavorOps.ToFlavor(flavorName));
+            }
         }
 
         public void RemoveACanOf(Flavor flavorName) {
@@ -90,9 +93,10 @@ namespace SimpleVendingMachine {
         }
 
         public bool StocksThisFlavor(string requestedFlavorName, ref Flavor selectedFlavor) {
-            Flavor flavor = Flavor.REGULAR;
-            bool stocksThisFlavor = Enum.TryParse(requestedFlavorName.ToUpper(), out flavor);
-            selectedFlavor = flavor;
+            bool stocksThisFlavor = FlavorOps.HasFlavor(requestedFlavorName);
+            if (stocksThisFlavor) {
+                selectedFlavor = FlavorOps.ToFlavor(requestedFlavorName);
+            }
             return stocksThisFlavor;
         }
 
@@ -103,7 +107,6 @@ namespace SimpleVendingMachine {
             }
             return canCount;
         }
-
 
         public string DisplayCanRack() {
             string inventory = "Inventory:\n";
