@@ -2,15 +2,15 @@
 using System.Diagnostics;
 
 // using C# v6.0
-// assignment #4 - Control Structures
+// assignment #5 - LINQ and Collections
 // Author: Steve Buckley
 
 namespace SimpleVendingMachine {
     class Program {
         static void Main(string[] args) {
-            
+            CoinBox coinBox = new CoinBox();
             CanRack vendingMachine = new CanRack();
-            PurchasePrice priceOfOneSoda = new PurchasePrice(35);
+            PurchasePrice priceOfOneSoda = new PurchasePrice(0.35M);
             bool purchasingAnotherSoda = true;
 
             if (args.Length > 0) {
@@ -30,6 +30,7 @@ namespace SimpleVendingMachine {
 
                 do {
                     string userResponse = ReadLine();
+                    coinBox = AddCoinsToCoinBoxFromListOfCoins(userResponse, coinBox);
                     totalAmountInserted += AmountInsertedFromListOfCoins(userResponse);
                     amountShort = priceOfOneSoda.PriceInDollars - totalAmountInserted;
                     if (amountShort > 0) {
@@ -71,6 +72,20 @@ namespace SimpleVendingMachine {
                     purchasingAnotherSoda = ReadKey().Key.ToString().ToLower() != "x";
                 }
             }
+            WriteLine($"\nThe coin box contains \n{coinBox.ToString()}");
+            WriteLine($" and has a total value of {coinBox.ValueOf:C}.");
+            WriteLine(" (ignores change returned) ToDo");
+            ReadKey();
+        }
+
+        private static CoinBox AddCoinsToCoinBoxFromListOfCoins(string listOfCoins, CoinBox coinBox) {
+            if (listOfCoins.Length > 0) {
+                string[] coins = listOfCoins.Split(' ');
+                foreach (var coinAbbrev in coins) {
+                    coinBox.Deposit(new Coin(coinAbbrev));
+                }
+            }
+            return coinBox;
         }
 
         private static decimal AmountInsertedFromListOfCoins(string listOfCoins) {
