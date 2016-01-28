@@ -14,9 +14,9 @@ namespace SimpleVendingMachine {
             bool purchasingAnotherSoda = true;
 
             if (args.Length > 0) {
-                ProcessCommandLinePurchase(args, ref vendingMachine, priceOfOneSoda);
-                ReadKey();
-                return;
+                ProcessCommandLinePurchase(args, vendingMachine, priceOfOneSoda, coinBox);
+                //ReadKey();
+                //return;
             }
 
             while (purchasingAnotherSoda) {
@@ -98,7 +98,7 @@ namespace SimpleVendingMachine {
             return sum;
         }
 
-        private static void ProcessCommandLinePurchase(string[] args, ref CanRack vendingMachine, PurchasePrice priceOfOneSoda) {
+        private static void ProcessCommandLinePurchase(string[] args, CanRack vendingMachine, PurchasePrice priceOfOneSoda, CoinBox coinBox) {
             if (args.Length < 2 ) {
                 WriteLine("Invalid Command line parameters: must be in the form 'flavor coin1 [coin2]...");
                 return;
@@ -111,6 +111,7 @@ namespace SimpleVendingMachine {
                 return;
             }
 
+            coinBox = AddCoinsToCoinBoxFromListOfCoins(string.Join(" ", args, 1, args.Length - 1), coinBox);
             decimal valueOfCoins = 0;
             for (int i=1; i<args.Length; i++) {
                 valueOfCoins += new Coin(args[i]).ValueOf;
@@ -122,6 +123,7 @@ namespace SimpleVendingMachine {
             } else {
                 vendingMachine.RemoveACanOf(flavor);
                 WriteLine($"Thanks. Here is your {flavor} soda.\n");
+                WriteLine($"\nThe coin box contains \n{coinBox.ToString()}");
                 if (amountOfChange > 0) {
                     WriteLine($"and here is your change of {amountOfChange:C}.");
                 }
