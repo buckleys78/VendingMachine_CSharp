@@ -1,5 +1,6 @@
 ﻿using static System.Console;
 using System.Diagnostics;
+using System;
 
 // using C# v6.0
 // assignment #5 - LINQ and Collections
@@ -15,8 +16,6 @@ namespace SimpleVendingMachine {
 
             if (args.Length > 0) {
                 ProcessCommandLinePurchase(args, vendingMachine, priceOfOneSoda, coinBox);
-                //ReadKey();
-                //return;
             }
 
             while (purchasingAnotherSoda) {
@@ -42,16 +41,18 @@ namespace SimpleVendingMachine {
                 bool selectionMade = false;
                 Flavor selectedFlavor = Flavor.LEMON;
                 do {
-                    WriteLine(vendingMachine.ConsoleSelectionPrompt());
+                    WriteLine(vendingMachine.ConsoleInteractiveSelectionPrompt());
                     string userSelection = ReadLine();
-                    selectionMade = vendingMachine.StocksThisFlavor(userSelection, ref selectedFlavor);
-                    if (selectionMade) {
+                    try {
+                        selectedFlavor = FlavorOps.ToFlavor(userSelection.ToUpper());
+                        selectionMade = true;
                         if (vendingMachine.IsEmpty(selectedFlavor)) {
                             WriteLine($"Sorry, we are out of {selectedFlavor}, please make a different choice.\n");
                             selectionMade = false;
                         }
-                    } else {
-                        WriteLine($"{userSelection} is not a recognized flavor. Please choose again.\n");
+                    } catch (Exception badFlavorException) {
+                        WriteLine($"{badFlavorException.Message} Please try again...\n");
+                        selectionMade = false;
                     }
                 } while (!selectionMade);
 
@@ -75,7 +76,6 @@ namespace SimpleVendingMachine {
             WriteLine($"\nThe coin box contains \n{coinBox.ToString()}");
             WriteLine($" and has a total value of {coinBox.ValueOf:C}.");
             WriteLine(" (ignores change returned) ToDo");
-            ReadKey();
         }
 
         private static CoinBox AddCoinsToCoinBoxFromListOfCoins(string listOfCoins, CoinBox coinBox) {

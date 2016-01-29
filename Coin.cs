@@ -43,11 +43,9 @@ namespace SimpleVendingMachine {
                 coinType = AbbrevNameToFullName(coinName);
             } else {
                 Enum.TryParse(coinName.ToUpper(), out coinType);
-                //Todo Throw Exception
             }
             Enumeral = coinType;
         }
-
 
         // Properties
         public Denomination Enumeral {get; set;}

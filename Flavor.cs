@@ -20,7 +20,13 @@ public static class FlavorOps {
 
     // Properties
     public static Flavor ToFlavor(string flavorName) {
-        return (Flavor)Enum.Parse(typeof(Flavor), flavorName.ToUpper());
+        Flavor flavor = Flavor.REGULAR;
+        try {
+            flavor = (Flavor)Enum.Parse(typeof(Flavor), flavorName.ToUpper());
+        } catch (Exception ex) {
+            throw new VENDBADFLAVORException($"{flavorName} is not a valid flavor.", ex);
+        }
+        return flavor;
     }
 
     public static List<Flavor> AllFlavors { get; }
@@ -29,4 +35,12 @@ public static class FlavorOps {
     public static bool HasFlavor(string flavorName) {
         return Enum.IsDefined(typeof(Flavor), flavorName.ToUpper());
     }
+}
+
+public class VENDBADFLAVORException : Exception {
+    public VENDBADFLAVORException() : base("Invalid flavor choice") { }
+
+    public VENDBADFLAVORException(string messageValue) : base(messageValue) { }
+
+    public VENDBADFLAVORException(string messageValue, Exception inner) : base(messageValue, inner) { }
 }

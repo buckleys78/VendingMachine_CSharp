@@ -116,7 +116,7 @@ namespace SimpleVendingMachine {
             return inventory += "\n";
         }
 
-        public string ConsoleSelectionPrompt() {
+        public string ConsoleInteractiveSelectionPrompt() {
             string prompt = "Select from the following: ";
             foreach (var key in Bins.Keys) {
                 prompt += key.ToString() + ", ";
