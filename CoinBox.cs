@@ -19,11 +19,12 @@ namespace SimpleVendingMachine {
         public void Deposit(Coin coin) {
             box.Add(coin);
         }
-            
+
         // take a coin of the specified denomination out of the box 
-        public Boolean Withdraw(Coin.Denomination ACoinDenomination) {
-            // ToDo - don't forget this!!!
-            return true;
+        public Boolean Withdraw(Coin.Denomination coin) {
+            if (true) {
+                return true;
+            }
         }
             
         // number of half dollars in the coin box 
@@ -62,11 +63,11 @@ namespace SimpleVendingMachine {
         }
 
         public override string ToString() {
-            return $"{HalfDollarCount} HalfDollars \n" + 
-                   $"{QuarterCount} Quarters \n" +
-                   $"{DimeCount} Dimes \n" +
-                   $"{NickelCount} Nickels \n" +
-                   $"{SlugCount} Slugs \n";
+            return $"{HalfDollarCount} HalfDollar{Pluralizer(HalfDollarCount)} \n" + 
+                   $"{QuarterCount} Quarter{Pluralizer(QuarterCount)} \n" +
+                   $"{DimeCount} Dime{Pluralizer(DimeCount)} \n" +
+                   $"{NickelCount} Nickel{Pluralizer(NickelCount)} \n" +
+                   $"{SlugCount} Slug{Pluralizer(SlugCount)} \n";
         }
 
         // total amount of money in the coin box 
@@ -83,6 +84,10 @@ namespace SimpleVendingMachine {
                          where coin.Enumeral == kindOfCoin
                          select coin;
             return result.Count();
+        }
+
+        private string Pluralizer(int qty) {
+            return qty == 1 ? string.Empty : "s";
         }
     }
 }
