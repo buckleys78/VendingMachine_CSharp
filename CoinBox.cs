@@ -4,34 +4,38 @@ using System.Linq;
 
 namespace SimpleVendingMachine {
     class CoinBox {
-        private List<Coin> box;
+        private Dictionary<Coin.Denomination, int> box;
 
         // constructor to create an empty coin box 
-        public CoinBox() : this(new List<Coin>()) { }
+        public CoinBox() : this(new List<Coin>()) {}
 
-        // constructor to create a coin box with some coins in it 
         public CoinBox(List<Coin> SeedMoney) {
-            box = new List<Coin>();
-            SeedMoney.ForEach((coin) => box.Add(coin));
+            box = new Dictionary<Coin.Denomination, int>();
+            foreach (Coin.Denomination coinType in Enum.GetValues(typeof(Coin.Denomination))) {
+                box.Add(coinType, 0);
+            }
+            SeedMoney.ForEach((coin) => Deposit(coin.Enumeral));
         }
+
             
         // put a coin in the coin box 
-        public void Deposit(Coin coin) {
-            box.Add(coin);
+        public void Deposit(Coin.Denomination coinType) {
+            box[coinType]++;
         }
 
         // take a coin of the specified denomination out of the box 
-        public Boolean Withdraw(Coin.Denomination coin) {
-            if (true) {
+        public Boolean Withdraw(Coin.Denomination coinType) {
+            if (CoinCount(coinType) > 0) {
+                box[coinType]--;
                 return true;
+            } else {
+                return false;
             }
         }
             
         // number of half dollars in the coin box 
         public int HalfDollarCount {
-            get {
-                return CoinCount(Coin.Denomination.HALFDOLLAR);
-            }
+            get { return CoinCount(Coin.Denomination.HALFDOLLAR); }
         }
 
         // number of quarters in the coin box 
@@ -73,17 +77,17 @@ namespace SimpleVendingMachine {
         // total amount of money in the coin box 
         public decimal ValueOf {
             get {
-                var result = from coin in box
-                             select coin.ValueOf;
-                return result.Sum();
+                var result = from coinType in box
+                             select coinType.Value * (int)coinType.Key;
+                return result.Sum() / 100M;
             }
         }
 
         private int CoinCount(Coin.Denomination kindOfCoin) {
-            var result = from coin in box
-                         where coin.Enumeral == kindOfCoin
-                         select coin;
-            return result.Count();
+            var result = from coinType in box
+                         where coinType.Key == kindOfCoin
+                         select coinType.Value;
+            return result.Sum();
         }
 
         private string Pluralizer(int qty) {

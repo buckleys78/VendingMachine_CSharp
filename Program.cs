@@ -82,7 +82,7 @@ namespace SimpleVendingMachine {
             if (listOfCoins.Length > 0) {
                 string[] coins = listOfCoins.Split(' ');
                 foreach (var coinAbbrev in coins) {
-                    coinBox.Deposit(new Coin(coinAbbrev));
+                    coinBox.Deposit(new Coin(coinAbbrev).Enumeral);
                 }
             }
             return coinBox;

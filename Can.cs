@@ -2,11 +2,10 @@
 namespace SimpleVendingMachine {
     class Can {
 
-        public Flavor Flavor { get; private set; }
+        public Flavor Flavor { get; private set; } = Flavor.REGULAR;
 
         // Constructor(s)
         public Can() {
-            Flavor = Flavor.REGULAR;
         }
 
         public Can(Flavor flavor) {
