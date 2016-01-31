@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace SimpleVendingMachine {
-    class PurchasePrice {
+    public class PurchasePrice {
         public PurchasePrice() {
             PriceInDollars = 0;
         }

@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace SimpleVendingMachine {
-    class CoinBox {
+    public class CoinBox {
         private Dictionary<Coin.Denomination, int> box;
 
         // constructor to create an empty coin box 
-        public CoinBox() : this(new List<Coin>()) {}
+        public CoinBox() : this(new List<Coin.Denomination>()) {}
 
-        public CoinBox(List<Coin> SeedMoney) {
+        public CoinBox(List<Coin.Denomination> SeedMoney) {
             box = new Dictionary<Coin.Denomination, int>();
             foreach (Coin.Denomination coinType in Enum.GetValues(typeof(Coin.Denomination))) {
                 box.Add(coinType, 0);
             }
-            SeedMoney.ForEach((coin) => Deposit(coin.Enumeral));
+            SeedMoney.ForEach((coin) => Deposit(coin));
         }
 
             

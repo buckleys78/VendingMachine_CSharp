@@ -1,6 +1,6 @@
 ﻿
 namespace SimpleVendingMachine {
-    class Can {
+    public class Can {
 
         public Flavor Flavor { get; private set; } = Flavor.REGULAR;
 

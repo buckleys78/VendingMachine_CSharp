@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace SimpleVendingMachine {
-    class CanRack {
+    public class CanRack {
         // constructor(s)
         public CanRack() {
             ConfigureTheCanRack();
