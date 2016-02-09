@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace SimpleVendingMachine {
     public class PurchasePrice {
-        public PurchasePrice() {
-            PriceInDollars = 0;
-        }
+        
+        // Constructor(s)
+        public PurchasePrice() : this(0M) { }
 
         [Obsolete("Use the decimal version of the constructor instead",error:false)]
         public PurchasePrice(int initialPriceInCents) {
@@ -19,13 +19,20 @@ namespace SimpleVendingMachine {
             PriceInDollars = initialPriceInDollars;
         }
 
-        public int Price {
-            get {
-                return (int) (PriceInDollars * 100);
-            }
-        }
-
+        // Properties
         public decimal PriceInDollars { get; private set; }
 
+        // Methods
+        public decimal Change(decimal amount) => amount - PriceInDollars;
+
+        public bool IsEnoughToPurchase(decimal amount) => Change(amount) >= 0;
+
+        public int Price => (int)(PriceInDollars * 100);
+
+        public decimal Shortage(decimal amount) => -Change(amount);
+
+        //public List<KeyValuePair<Coin.Denomination, int>> CoinsNeededToMakeChange(decimal amt) {
+
+        //};
     }
 }

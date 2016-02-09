@@ -8,32 +8,29 @@ public enum Flavor {
 }
 
 public static class FlavorOps {
-    //private static List<Flavor> _allFlavors = new List<Flavor>();
+    // Properties
+    public static List<Flavor> AllFlavors { get; } = new List<Flavor>();
 
     // Constructor(s)
     static FlavorOps() {
-        AllFlavors = new List<Flavor>();
         foreach (Flavor flavor in Enum.GetValues(typeof(Flavor))) {
             AllFlavors.Add(flavor);
         }
     }
 
-    // Properties
-    public static Flavor ToFlavor(string flavorName) {
-        Flavor flavor = Flavor.REGULAR;
-        try {
-            flavor = (Flavor)Enum.Parse(typeof(Flavor), flavorName.ToUpper());
-        } catch (Exception ex) {
-            throw new VENDBADFLAVORException($"{flavorName} is not a valid flavor.", ex);
-        }
-        return flavor;
-    }
-
-    public static List<Flavor> AllFlavors { get; }
-
     // Methods
     public static bool HasFlavor(string flavorName) {
         return Enum.IsDefined(typeof(Flavor), flavorName.ToUpper());
+    }
+
+    public static Flavor ToFlavor(string flavorName) {
+        Flavor flavor = Flavor.REGULAR;
+        if (HasFlavor(flavorName)) {
+            flavor = (Flavor)Enum.Parse(typeof(Flavor), flavorName.ToUpper());
+        } else {
+            throw new VENDBADFLAVORException($"{flavorName} is not a valid flavor.");
+        }
+        return flavor;
     }
 }
 

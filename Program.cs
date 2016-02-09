@@ -2,6 +2,8 @@
 using System.Diagnostics;
 using System;
 
+using System.Collections.Generic;
+
 // using C# v6.0
 // assignment #5 - LINQ and Collections
 // Author: Steve Buckley
@@ -13,6 +15,10 @@ namespace SimpleVendingMachine {
             CanRack vendingMachine = new CanRack();
             PurchasePrice priceOfOneSoda = new PurchasePrice(0.35M);
             bool purchasingAnotherSoda = true;
+
+            //List<Flavor> myHack = FlavorOps.AllFlavors;
+            //myHack.Clear();
+            //WriteLine(FlavorOps.AllFlavors.ToString());  FlavorOps is wiped out!!!!
 
             if (args.Length > 0) {
                 ProcessCommandLinePurchase(args, vendingMachine, priceOfOneSoda, coinBox);
@@ -38,23 +44,7 @@ namespace SimpleVendingMachine {
                 } while (totalAmountInserted < priceOfOneSoda.PriceInDollars);
 
                 WriteLine($"You have inserted {totalAmountInserted:C}\n\n");
-                bool selectionMade = false;
-                Flavor selectedFlavor = Flavor.LEMON;
-                do {
-                    WriteLine(vendingMachine.ConsoleInteractiveSelectionPrompt());
-                    string userSelection = ReadLine();
-                    try {
-                        selectedFlavor = FlavorOps.ToFlavor(userSelection.ToUpper());
-                        selectionMade = true;
-                        if (vendingMachine.IsEmpty(selectedFlavor)) {
-                            WriteLine($"Sorry, we are out of {selectedFlavor}, please make a different choice.\n");
-                            selectionMade = false;
-                        }
-                    } catch (Exception badFlavorException) {
-                        WriteLine($"{badFlavorException.Message} Please try again...\n");
-                        selectionMade = false;
-                    }
-                } while (!selectionMade);
+                Flavor selectedFlavor = GetFlavorFromUser(vendingMachine);
 
                 vendingMachine.RemoveACanOf(selectedFlavor);
                 WriteLine($"Thanks. Here is your {selectedFlavor} soda.");
@@ -76,6 +66,27 @@ namespace SimpleVendingMachine {
             WriteLine($"\nThe coin box contains \n{coinBox.ToString()}");
             WriteLine($" and has a total value of {coinBox.ValueOf:C}.");
             WriteLine(" (ignores change returned) ToDo");
+        }
+
+        private static Flavor GetFlavorFromUser(CanRack vendingMachine) {
+            bool selectionMade = false;
+            Flavor selectedFlavor = Flavor.LEMON;
+            do {
+                WriteLine(vendingMachine.ConsoleInteractiveSelectionPrompt());
+                string userSelection = ReadLine();
+                try {
+                    selectedFlavor = FlavorOps.ToFlavor(userSelection.ToUpper());
+                    selectionMade = true;
+                    if (vendingMachine.IsEmpty(selectedFlavor)) {
+                        WriteLine($"Sorry, we are out of {selectedFlavor}, please make a different choice.\n");
+                        selectionMade = false;
+                    }
+                } catch (Exception badFlavorException) {
+                    WriteLine($"{badFlavorException.Message} Please try again...\n");
+                    selectionMade = false;
+                }
+            } while (!selectionMade);
+            return selectedFlavor;
         }
 
         private static CoinBox AddCoinsToCoinBoxFromListOfCoins(string listOfCoins, CoinBox coinBox) {

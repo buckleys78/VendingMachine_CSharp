@@ -53,12 +53,16 @@ namespace SimpleVendingMachine {
         }
 
         public void EmptyBin() {
-            Quantity = minCapacity;
+            while (!IsEmpty) {
+                RemoveCan();
+            }
             Debug.WriteLine($"Bin.EmptyBin was called for flavor {Flavor.ToString()}, New Qty = {Quantity}.");
         }
 
         public void FillBin() {
-            Quantity = maxCapacity;
+            while (!IsFull) {
+                AddCan();
+            }
             Debug.WriteLine($"Bin.FillBin was called for flavor {Flavor.ToString()}, New Qty = {Quantity}.");
         }
 

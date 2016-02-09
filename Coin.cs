@@ -1,5 +1,4 @@
 ﻿using System;
-using static System.Console;
 
 namespace SimpleVendingMachine {
     public class Coin {
@@ -8,9 +7,7 @@ namespace SimpleVendingMachine {
         }
 
         // Constructor(s)
-        public Coin() {
-            Enumeral = Denomination.SLUG;
-        }
+        public Coin() : this(Denomination.SLUG) { }
 
         public Coin(Denomination coin) {
             Enumeral = coin;
@@ -50,35 +47,9 @@ namespace SimpleVendingMachine {
         // Properties
         public Denomination Enumeral {get; set;}
 
-        public decimal ValueOf {
-            get {
-                return (int)Enumeral / 100M;
-            }
-        }
+        public decimal ValueOf => (int)Enumeral / 100M;
 
-        public override string ToString() {
-            return Enumeral.ToString();
-        }
-
-        public void CoinUnitTests() {
-            Coin coinTest1 = new Coin();
-            WriteLine($"coinTest1 expects 'SLUG', result = {coinTest1.ToString()}.");
-
-            Coin coinTest2 = new Coin(Coin.Denomination.HALFDOLLAR);
-            WriteLine($"coinTest2 expects 'HALFDOLLAR', result = {coinTest2.ToString()}.");
-
-            Coin coinTest3 = new Coin("Dime");
-            WriteLine($"coinTest3 expects 'DIME', result = {coinTest3.ToString()}.");
-
-            Coin coinTest4 = new Coin("Quarter");
-            WriteLine($"coinTest4 expects 25, result = {coinTest4.ValueOf}.");
-
-            Coin coinTest5 = new Coin(25);
-            WriteLine($"coinTest5 expects 25, result = {coinTest5.ValueOf}.");
-
-            Coin coinTest6 = new Coin(15);
-            WriteLine($"coinTest6 expects 0, result = {coinTest6.ValueOf}.");
-        }
+        public override string ToString() => Enumeral.ToString();
 
         private Denomination AbbrevNameToFullName(string firstLetter) {
             switch (firstLetter.ToUpper()) {
