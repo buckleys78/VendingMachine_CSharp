@@ -104,8 +104,10 @@ namespace SimpleVendingMachine {
         }
 
         public void EmptyAllCoins() {
-            foreach (Coin.Denomination coinType in box.Keys) {
-                box[coinType] = 0;
+            foreach (KeyValuePair<Coin.Denomination,int> kvp in ListOfContents) {
+                for (int i = kvp.Value; i>0; i--) {
+                    Withdraw(kvp.Key);
+                }
             }
         }
 

@@ -2,7 +2,7 @@
 using System;
 
 namespace SimpleVendingMachine {
-    class Bin {
+    public class Bin {
         private const int maxCapacity = 3;
         private const int minCapacity = 0;
 

@@ -11,7 +11,7 @@ namespace SimpleVendingMachine {
         }
 
         // properties
-        Dictionary<Flavor, Bin> Bins { get; set; }
+        public Dictionary<Flavor, Bin> Bins { get; set; }
 
         // methods
         public void AddACanOf(string flavorName) {
@@ -100,7 +100,7 @@ namespace SimpleVendingMachine {
             return stocksThisFlavor;
         }
 
-        private int TotalInventory() {
+        public int TotalInventory() {
             int canCount = 0;
             foreach (var key in Bins.Keys) {
                 canCount += (Bins[key].Quantity);
