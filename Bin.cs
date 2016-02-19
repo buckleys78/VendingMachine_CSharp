@@ -1,10 +1,9 @@
 ﻿using System.Diagnostics;
-using System;
 
 namespace SimpleVendingMachine {
     public class Bin {
-        private const int maxCapacity = 3;
-        private const int minCapacity = 0;
+        private const int MaxCapacity = 3;
+        private const int MinCapacity = 0;
 
         //Constructor(s)
         public Bin(string flavor) {
@@ -22,23 +21,19 @@ namespace SimpleVendingMachine {
         // Properties
         public Flavor Flavor { get; set; }
 
-        public string Inventory {
-            get {
-                return $"{Quantity} cans of {Flavor.ToString()}";
-            }
-        }
+        public string Inventory => $"{Quantity} cans of {Flavor.ToString()}";
 
         public bool IsEmpty {
             get {
                 Debug.WriteLine($"Bin.IsEmpty was called for flavor {Flavor.ToString()}");
-                return Quantity == minCapacity;
+                return Quantity == MinCapacity;
             }
         }
 
         public bool IsFull {
             get {
                 Debug.WriteLine($"Bin.IsFull was called for flavor {Flavor.ToString()}");
-                return Quantity == maxCapacity;
+                return Quantity == MaxCapacity;
             }
         }
 

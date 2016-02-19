@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace SimpleVendingMachine {
@@ -110,10 +109,10 @@ namespace SimpleVendingMachine {
 
         public string DisplayCanRack() {
             string inventory = "Inventory:\n";
-            foreach (var key in Bins.Keys) {
+            foreach (var key in Bins.Keys)
                 inventory += (Bins[key].Inventory + "\n");
-            }
-            return inventory += "\n";
+            inventory += "\n";
+            return inventory;
         }
 
         public string ConsoleInteractiveSelectionPrompt() {

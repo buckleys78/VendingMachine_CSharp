@@ -24,20 +24,20 @@ public static class FlavorOps {
     }
 
     public static Flavor ToFlavor(string flavorName) {
-        Flavor flavor = Flavor.REGULAR;
+        Flavor flavor;
         if (HasFlavor(flavorName)) {
             flavor = (Flavor)Enum.Parse(typeof(Flavor), flavorName.ToUpper());
         } else {
-            throw new VENDBADFLAVORException($"{flavorName} is not a valid flavor.");
+            throw new VendBadFlavorException($"{flavorName} is not a valid flavor.");
         }
         return flavor;
     }
 }
 
-public class VENDBADFLAVORException : Exception {
-    public VENDBADFLAVORException() : base("Invalid flavor choice") { }
+public class VendBadFlavorException : Exception {
+    public VendBadFlavorException() : base("Invalid flavor choice") { }
 
-    public VENDBADFLAVORException(string messageValue) : base(messageValue) { }
+    public VendBadFlavorException(string messageValue) : base(messageValue) { }
 
-    public VENDBADFLAVORException(string messageValue, Exception inner) : base(messageValue, inner) { }
+    public VendBadFlavorException(string messageValue, Exception inner) : base(messageValue, inner) { }
 }

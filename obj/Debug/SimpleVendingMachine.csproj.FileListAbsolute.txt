@@ -15,3 +15,4 @@ E:\Learning New Stuff\UW Continuing Ed\CSharp_810\Project\SimpleVendingMachine\o
 E:\Learning New Stuff\UW Continuing Ed\CSharp_810\Project\SimpleVendingMachine\obj\Debug\SimpleVendingMachine.pdb
 E:\Learning New Stuff\UW Continuing Ed\CSharp_810\Project\SimpleVendingMachine\bin\Debug\SimpleVendingMachine.exe
 E:\Learning New Stuff\UW Continuing Ed\CSharp_810\Project\SimpleVendingMachine\bin\Debug\SimpleVendingMachine.pdb
+E:\Learning New Stuff\UW Continuing Ed\CSharp_810\Project\SimpleVendingMachine\obj\Debug\SimpleVendingMachine.csprojResolveAssemblyReference.cache

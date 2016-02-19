@@ -35,7 +35,7 @@ namespace SimpleVendingMachine {
         }
 
         public Coin(string coinName) {
-            Denomination coinType = Denomination.SLUG;
+            Denomination coinType;
             if (coinName.Length == 1) {
                 coinType = AbbrevNameToFullName(coinName);
             } else {

@@ -1,8 +1,6 @@
 ﻿using static System.Console;
-using System.Diagnostics;
 using System;
-
-using System.Collections.Generic;
+using System.Linq;
 
 // using C# v6.0
 // assignment #5 - LINQ and Collections
@@ -26,7 +24,7 @@ namespace SimpleVendingMachine {
 
             while (purchasingAnotherSoda) {
                 decimal totalAmountInserted = 0;
-                decimal amountShort = 0;
+                decimal amountShort;
 
                 WriteLine("Welcome to the .NET C# Soda Vending Machine");
                 WriteLine(vendingMachine.DisplayCanRack());
@@ -69,13 +67,13 @@ namespace SimpleVendingMachine {
         }
 
         private static Flavor GetFlavorFromUser(CanRack vendingMachine) {
-            bool selectionMade = false;
+            bool selectionMade;
             Flavor selectedFlavor = Flavor.LEMON;
             do {
                 WriteLine(vendingMachine.ConsoleInteractiveSelectionPrompt());
                 string userSelection = ReadLine();
                 try {
-                    selectedFlavor = FlavorOps.ToFlavor(userSelection.ToUpper());
+                    selectedFlavor = FlavorOps.ToFlavor(userSelection?.ToUpper());
                     selectionMade = true;
                     if (vendingMachine.IsEmpty(selectedFlavor)) {
                         WriteLine($"Sorry, we are out of {selectedFlavor}, please make a different choice.\n");
@@ -102,11 +100,7 @@ namespace SimpleVendingMachine {
         private static decimal AmountInsertedFromListOfCoins(string listOfCoins) {
             if (listOfCoins.Length == 0) return 0;
             string[] coins = listOfCoins.Split(' ');
-            decimal sum = 0;
-            foreach (var coinAbbrev in coins) {
-                sum += new Coin(coinAbbrev).ValueOf;
-            }
-            return sum;
+            return coins.Sum(coinAbbrev => new Coin(coinAbbrev).ValueOf);
         }
 
         private static void ProcessCommandLinePurchase(string[] args, CanRack vendingMachine, PurchasePrice priceOfOneSoda, CoinBox coinBox) {
